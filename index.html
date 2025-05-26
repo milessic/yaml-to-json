@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YAML to JSON Converter</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Load Code Prettify -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/styles/prettify.css">
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>YAML to JSON Converter</h1>
+
+	  <div>
+		  <label for="compactCheckbox">Compact?</label>
+		  <input type="checkbox" id="compactCheckbox">
+	  </div>
+
+      <button id="toggleDark">🌙 Toggle Dark Mode</button>
+    </div>
+    <div class="editor-wrapper">
+      <div class="editor-section">
+        <label for="yamlInput">YAML Input</label>
+        <textarea id="yamlInput" placeholder="Type or paste YAML here..." class="prettyprint lang-yaml"></textarea>
+      </div>
+      <div class="editor-section">
+        <label for="jsonOutput">JSON Output</label>
+        <pre id="jsonOutput" ></pre>
+		<button id="copyOutput">Copy</button>
+      </div>
+    </div>
+	<!--<p class="hint">Press TAB to insert spaces</p>-->
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
+
