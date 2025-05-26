@@ -70,6 +70,8 @@ function loadYamlFromLocalStorage(){
 
 
 function handleTabs(e) {
+	// TODO shift + tab without selection
+	indent= '  ';
     if (e.key === 'Tab') {
         e.preventDefault();
 
@@ -80,9 +82,12 @@ function handleTabs(e) {
         const lines = value.substring(start, end).split('\n');
         const before = value.substring(0, start);
         const after = value.substring(end);
+		if (start === end){
+			yamlInput.setRangeText(indent, start, end, 'end');
+			return
+		}
 
         const isShift = e.shiftKey;
-        const indent = '    '; // You can use '\t' instead of 4 spaces if preferred
 
         let selectionOffset = 0;
 
