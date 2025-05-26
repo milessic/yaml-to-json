@@ -8,12 +8,7 @@ window.addEventListener("load", () => {
 });
 // Handle TAB
 yamlInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Tab') {
-    e.preventDefault();
-    const start = yamlInput.selectionStart;
-    const end = yamlInput.selectionEnd;
-    yamlInput.setRangeText('  ', start, end, 'end');
-  }
+	handleTabs(e);
     PR.prettyPrint();
 	saveYamlToLocalStorage();
 
@@ -74,3 +69,50 @@ function loadYamlFromLocalStorage(){
 }
 
 
+function handleTabs(e) {
+    if (e.key === 'Tab') {
+        e.preventDefault();
+
+        const start = yamlInput.selectionStart;
+        const end = yamlInput.selectionEnd;
+
+        const value = yamlInput.value;
+        const lines = value.substring(start, end).split('\n');
+        const before = value.substring(0, start);
+        const after = value.substring(end);
+
+        const isShift = e.shiftKey;
+        const indent = '    '; // You can use '\t' instead of 4 spaces if preferred
+
+        let selectionOffset = 0;
+
+        if (isShift) {
+            // Unindent
+            const updatedLines = lines.map(line => {
+                if (line.startsWith(indent)) {
+                    selectionOffset -= indent.length;
+                    return line.slice(indent.length);
+                } else if (line.startsWith('\t')) {
+                    selectionOffset -= 1;
+                    return line.slice(1);
+                }
+                return line;
+            });
+            const updatedText = updatedLines.join('\n');
+            yamlInput.value = before + updatedText + after;
+            yamlInput.selectionStart = start;
+            yamlInput.selectionEnd = start + updatedText.length;
+        } else {
+            // Indent
+            const updatedLines = lines.map(line => {
+                selectionOffset += indent.length;
+                return indent + line;
+            });
+            const updatedText = updatedLines.join('\n');
+            yamlInput.value = before + updatedText + after;
+            yamlInput.selectionStart = start;
+            yamlInput.selectionEnd = start + updatedText.length;
+        }
+    }
+	handleConvertion();
+}
