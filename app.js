@@ -16,7 +16,7 @@ yamlInput.addEventListener('keydown', (e) => {
 
 // Convert YAML to JSON
 yamlInput.addEventListener('input', handleConvertion);
-compactCheckbox.addEventListener('change', handleConvertion);
+compactCheckbox.addEventListener('change', () => {handleConvertion(); jsonOutput.classList.toggle("text-wrap")});
 
 // Toggle dark mode
 toggleDark.addEventListener('click', () => {
@@ -25,6 +25,9 @@ toggleDark.addEventListener('click', () => {
 
 copyOutput.addEventListener('click', () =>{
 	navigator.clipboard.writeText(jsonOutput.textContent);
+	copyOutput.querySelector("span").innerText = "Copied";
+	copyOutput.classList.add("copied");
+	setTimeout(()=>{copyOutput.querySelector("span").innerText = "Copy";copyOutput.classList.remove("copied")}, 2000);
 });
 
 function OLD____handleConvertion(){
@@ -40,8 +43,9 @@ function OLD____handleConvertion(){
 function handleConvertion(){
   try {
     const yamlText = yamlInput.value;
-    const jsonObj = jsyaml.load(yamlText);
+    const jsonObj = yamlText ? jsyaml.load(yamlText) : {};
     const jsonStr = compactCheckbox.checked ? JSON.stringify(jsonObj) : JSON.stringify(jsonObj, null, 2);
+
 
     // Escape JSON for HTML, to avoid messing up with <, >, etc.
     const escaped = jsonStr

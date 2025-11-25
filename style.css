@@ -48,7 +48,7 @@ button {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: width 0.3s ease;
 }
 
 button:hover {
@@ -104,6 +104,19 @@ textarea:focus {
 	position: absolute;
 	top: 55px;
 	right: 15px;
+	display: inline-block;
+    overflow: hidden;
+	padding: 8px 12px;
+    transition: padding 0.25s ease;
+}
+#copyOutput.copied {
+	padding: 8px 18px;
+}
+
+
+#copyOutput span {
+  display: inline-block;
+  white-space: nowrap;
 }
 @media (max-width: 1000px){
 	.editor-section{
@@ -124,3 +137,10 @@ textarea:focus {
 
 }
 
+.text-wrap {
+	white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
